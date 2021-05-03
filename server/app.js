@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-// const expressSession = require('express-session');
+const expressSession = require('express-session');
 // load configuration
 const port = process.env.PORT || 8000;
 const config = require('./config/jwt')
@@ -36,21 +36,21 @@ app.use(express.static(path.join(__dirname, '../build')))
 // })
 // set the secret key variable for jwt
 app.set('jwt-secret', config.secret);
-/*
+
 app.use(
-	    expressSession({
-		          resave: false,
-		          saveUninitialized: false,
-		          secret: process.env.COOKIE_SECRET,
-		          proxy: true,
-		          cookie: {
-				          httpOnly: true,
-				          secure: process.env.NODE_ENV === 'development' ? false : true,
-				          sameSite: process.env.NODE_ENV === 'development' ? false : 'none'
-				        },
-		        })
+	expressSession({
+	    resave: false,
+	    saveUninitialized: false,
+	    secret: process.env.COOKIE_SECRET,
+	    proxy: true,
+	    cookie: {
+		    httpOnly: true,
+		    secure: process.env.NODE_ENV === 'development' ? false : true,
+		    sameSite: process.env.NODE_ENV === 'development' ? false : 'none'
+		},
+	})
 );
-*/
+
 // router
 app.use('/', require('./routes/index'));
 
