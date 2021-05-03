@@ -35,6 +35,7 @@ exports.dupCheck = (req, res) => {
 
 
   const respond = ({connection, result}) => {
+    
     if(result[0].success) {
       res.status(200).json({
         msg: 'exist'
