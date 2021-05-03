@@ -3,7 +3,7 @@ import {Redirect, Route} from 'react-router';
 import { useAsync } from 'react-async';
 
 const isLogin = async() => {
-  const response = await fetch('http://3.143.140.19:8000/auth/check', { method: 'GET'});
+  const response = await fetch('/auth/check', { method: 'GET'});
   return response.json();
 }
 
