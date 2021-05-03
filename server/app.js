@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const expressSession = require('express-session');
+// const expressSession = require('express-session');
 // load configuration
 const port = process.env.PORT || 8000;
 const config = require('./config/jwt')
