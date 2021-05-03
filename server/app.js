@@ -37,23 +37,21 @@ app.use(express.static(path.join(__dirname, '../build')))
 // set the secret key variable for jwt
 app.set('jwt-secret', config.secret);
 
-// app.use(
-// 	expressSession({
-// 	    resave: false,
-// 	    saveUninitialized: false,
-// 	    secret: process.env.COOKIE_SECRET,
-// 	    proxy: true,
-// 	    cookie: {
-// 		    httpOnly: true,
-// 		    secure: process.env.NODE_ENV === 'development' ? false : true,
-// 		    sameSite: process.env.NODE_ENV === 'development' ? false : 'none'
-// 		},
-// 	})
-// );
-
 // router
 app.use('/', require('./routes/index'));
-
+app.use(
+	expressSession({
+	    resave: false,
+	    saveUninitialized: false,
+	    secret: process.env.COOKIE_SECRET,
+	    proxy: true,
+	    cookie: {
+		    httpOnly: true,
+		    secure: process.env.NODE_ENV === 'development' ? false : true,
+		    sameSite: process.env.NODE_ENV === 'development' ? false : 'none'
+		},
+	})
+);
 // open server
 app.listen(port, () => {
     console.log(`express is running on ${port}`);
