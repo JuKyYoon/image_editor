@@ -6,7 +6,6 @@ import LoadImage from './LoadImage';
 import Withdrawal from './Withdrawal';
 import '../css/Main.scss';
 import checkUserLanguage from './helper/CheckLang';
-import Loading from './ui/Loading';
 import { withTranslation } from "react-i18next";
 import { Link } from 'react-router-dom';
 import i18next from "../locale/i18n";
@@ -20,7 +19,7 @@ class Main extends Component {
       id : '',
       withdrawalModal: false
     }
-    i18next.changeLanguage(checkUserLanguage());
+    // i18next.changeLanguage(checkUserLanguage());
   }
 
   componentDidMount(){
@@ -81,20 +80,6 @@ class Main extends Component {
 
   }
 
-  checkUserLanguage = () => {
-    if(navigator){
-      let lang = navigator.language || navigator.userLanguage;
-      switch(lang){
-        case 'ko-KR':
-          i18next.changeLanguage('ko');
-          break;
-        default:
-          i18next.changeLanguage('en');
-          break;
-      }
-    }
-  }
-
   changeToKorean = () => {
     i18next.changeLanguage('ko')
   }
@@ -122,7 +107,7 @@ class Main extends Component {
           <div className="main-box">
             <div className='sidenav'>
               <div className="site-title">
-                <p className="site-title-p">image-editor</p>
+                {/* <p className="site-title-p">image-editor</p> */}
               </div>
               <div className="add-image-menu">
                 <button className = {this.state.tab == 0 ?  "sidenav-button-active" : "sidenav-button"} onClick={this.changeTab} tab='0'>{t('Main.New Project')}</button>

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import i18next from "../locale/i18n";
 import { withTranslation } from "react-i18next";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Loading from './ui/Loading';
 import '../css/Project.scss';
 
 class Project extends Component {
@@ -13,7 +14,8 @@ class Project extends Component {
       projects : [],
       project_length : 20,
       scroll: true,
-      sort : 0
+      sort : 0,
+      loading : false
     }
     this.canvas = null;
     this.limit = 20;
@@ -28,6 +30,7 @@ class Project extends Component {
 
   getProjects = () => {
     if(this.props.id === '') { return; }
+    this.setState({loading : true})
     fetch('/content/get', {
       method: 'POST',
       headers: {
@@ -43,6 +46,7 @@ class Project extends Component {
     })
     .then((res) => res.json())
     .then((data) => {
+      this.setState({loading : false})
       if(data.success){
         if(data.result.length === 0) {
           this.setState({scroll: false});
@@ -67,6 +71,7 @@ class Project extends Component {
     })
     .catch(() => {
       alert(i18next.t('Project.Error'));
+      this.setState({loading : false})
     })
   }
 
@@ -273,7 +278,7 @@ class Project extends Component {
     return (
       <div className="project-main">
         {/* <p>{this.state.last.title} {this.state.last.create_date}</p> */}
-        <h2>{i18next.t('Project.Project')}</h2>
+        <div className="project-header">{i18next.t('Project.Project')}</div>
         <div className="project-button-box">
             <div className="sort-button-box">
                 <button className = "proejct-sort-button" option = "0" onClick= {this.projectSort}> {i18next.t('Project.Title')} ↑ </button>
@@ -281,19 +286,15 @@ class Project extends Component {
                 <button className = "proejct-sort-button" option = "2" onClick= {this.projectSort}> {i18next.t('Project.Date')} ↑ </button>
                 <button className = "proejct-sort-button" option = "3" onClick= {this.projectSort}> {i18next.t('Project.Date')} ↓ </button>
             </div>
-            <button delete = "all" onClick={this.checkDelete}><i delete = "all" className="fas fa-times-circle fa-4x"></i></button>
-        </div>
-        <div className="project-search">
-          <div className="project-search-form">
-            <form onSubmit={this.handleSubmit}>
-              {i18next.t('Project.Title')} <input name="search" ref={this.input}  />
-              <input type="submit" value="Submit" />
-            </form>
-          </div>
-          {/* <div>
-            {this.props.id} {i18next.t('Project.User')}
-            <p className="project-search-data">{i18next.t('Project.Search')} : {this.state.search}</p>
-          </div> */}
+            <div className="project-search">
+                <div className="project-search-form">
+                    <form onSubmit={this.handleSubmit}>
+                        {i18next.t('Project.Title')} <input className="search" name="search" ref={this.input}  />
+                        <input type="submit" value="Search" />
+                    </form>
+                </div>
+            </div>
+            <button id="delete-all" delete = "all" onClick={this.checkDelete}> {i18next.t('Project.Delete all')}</button>
         </div>
         <div id="project-list" style={{overflow:"auto", height:500}}>
           <InfiniteScroll 
@@ -331,6 +332,7 @@ class Project extends Component {
             )}
           </InfiniteScroll>
         </div>
+        <Loading open = {this.state.loading}/>
       </div>
     )
   }
