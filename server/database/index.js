@@ -8,11 +8,9 @@ const config = {
   "port" : process.env.SESSION_DB_PORT,
   "connectionLimit": 30
 }
-console.log(config)
 class Database {
   constructor() {
     this.connection = mysql.createConnection(config);
-    console.log(this.connection)
   }
 
   query = (sql,args) => {
