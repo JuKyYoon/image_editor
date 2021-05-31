@@ -5,6 +5,7 @@ const config = {
   "user"     : process.env.SESSION_DB_USER,
   "password" : process.env.SESSION_DB_PW,
   "database" : process.env.SESSION_DB_NAME,
+  "port" : process.env.SESSION_DB_PORT,
   "connectionLimit": 30
 }
 class Database {
