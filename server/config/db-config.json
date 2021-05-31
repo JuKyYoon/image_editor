@@ -1,7 +1,0 @@
-{
-  "host"     : "localhost",
-	"user"     : "jky",
-	"password" : "0000",
-	"database" : "image-editor",
-	"connectionLimit": 30
-}

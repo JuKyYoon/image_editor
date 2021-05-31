@@ -4,7 +4,6 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-// const expressSession = require('express-session');
 // load configuration
 const port = process.env.PORT || 8000;
 const config = require('./config/jwt')
@@ -39,19 +38,18 @@ app.set('jwt-secret', config.secret);
 
 // router
 app.use('/', require('./routes/index'));
-// app.use(
-// 	expressSession({
-// 	    resave: false,
-// 	    saveUninitialized: false,
-// 	    secret: process.env.COOKIE_SECRET,
-// 	    proxy: true,
-// 	    cookie: {
-// 		    httpOnly: true,
-// 		    secure: process.env.NODE_ENV === 'development' ? false : true,
-// 		    sameSite: process.env.NODE_ENV === 'development' ? false : 'none'
-// 		},
-// 	})
-// );
+
+
+var host = process.env.HOST || '127.0.0.1';
+var cors_proxy = require('cors-anywhere');
+cors_proxy.createServer({
+    originWhitelist: [], // Allow all origins
+    requireHeader: ['origin', 'x-requested-with'],
+    removeHeaders: ['cookie', 'cookie2']
+}).listen(port, host, function() {
+    console.log('Running CORS Anywhere on ' + host + ':' + port);
+});
+
 // open server
 app.listen(port, () => {
     console.log(`express is running on ${port}`);
