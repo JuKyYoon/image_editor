@@ -49,7 +49,14 @@ class ImageMini extends Component {
   }
 
   showImage = (imagelist) => {
-    if(imagelist['errors']){ alert(i18next.t('ImageList.Showimage errors')); return null;}
+    if(imagelist['errors']){ 
+      // alert(i18next.t('ImageList.Showimage errors')); 
+      return(
+        <div style={{color : 'white'}}>
+          Not Found
+        </div>
+      )
+    }
     const listitem = imagelist.map((image) =>
       <div className="mini-image-list-box" key={image.id} >
         <img className="image-list-img" key={image.id} user={image.user.name} links = {image.user.links.html} dl = {image.links.download_location} src={image.urls.thumb} alt="." onClick={ this.onClickThumb } full = {image.urls.full} raw = {image.urls.raw} regular = {image.urls.regular} small = {image.urls.small} full-width = {image.width} />
@@ -144,7 +151,7 @@ class ImageMini extends Component {
         <ImageModal open={this.state.openModal} close = {this.closeModal}>
           <div className="mini-image-modal-div">
             <div className="mini-image-preview">
-              <img className="preview-img" src = {image.small} url={image.full} alt="." onClick={this.onClickImg}/>
+              <img className="preview-img" src = {image.small} url={image.full} alt="." />
             </div>
 
             <div id="modal-miniimage-list" >
@@ -196,7 +203,7 @@ class ImageMini extends Component {
               <div className="modal-miniimage-list-text">thumb: {this.state.imageSize.thumb.x} X {this.state.imageSize.thumb.y}</div>
             </div> */}
           </div>
-          <p className="photo-tag">Photo by <a href={this.state.user_link + "?utm_source=" + unSplashAppName + "&utm_medium=referral"} target = "_blank">{this.state.user}</a> on <a href={"https://unsplash.com/?utm_source=" + unSplashAppName + "&utm_medium=referral"} target = "_blank">Unsplash</a></p>
+          <p className="photo-tag">Photo by <a href={this.state.user_link + "?utm_source=" + unSplashAppName + "&utm_medium=referral"} target = "_blank" rel="noreferrer">{this.state.user}</a> on <a href={"https://unsplash.com/?utm_source=" + unSplashAppName + "&utm_medium=referral"} target = "_blank" rel="noreferrer">Unsplash</a></p>
         </ImageModal>
       )
     }

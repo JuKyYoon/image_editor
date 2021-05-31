@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import i18next from "../../locale/i18n";
 import { withTranslation } from "react-i18next";
+import { RotationIcon } from '../const/consts'
 import '../../css/ui/Rotation.scss';
 
 export default withTranslation()(class Rotation extends Component{
@@ -10,13 +11,13 @@ export default withTranslation()(class Rotation extends Component{
   }
 
   componentDidMount(){
-    console.log('Rotation UI Mount');
+    // console.log('Rotation UI Mount');
   }
   componentDidUpdate(){
-    console.log('Rotation UI Update');
+    // console.log('Rotation UI Update');
   }
   componentWillUnmount(){
-    console.log('Rotation UI Unmount');
+    // console.log('Rotation UI Unmount');
   }
 
   handleAngleChange = (event) => {
@@ -31,6 +32,19 @@ export default withTranslation()(class Rotation extends Component{
   setAngle = (event) => {
     var changeAngle = event.target.getAttribute('angle');
     this.props.setObjectAngle(Number(changeAngle));
+  }
+
+  angleValue = () => {
+    if(this.props.object.type !== 'not active'){
+      return this.props.object.angle;
+    }
+    else if(this.props.getBackgroundImage()){
+      // console.log(this.props.getBackgroundImage().angle)
+      return this.props.getBackgroundImage().angle
+    }
+    else{
+      return 0
+    }
   }
 
   render(){
@@ -57,10 +71,18 @@ export default withTranslation()(class Rotation extends Component{
             </div>
             <div className="clock-button">
               <div>
-                <button id="clockwise" onClick={this.rotateObject} angle='-30'></button>
+                <button id="clockwise" onClick={this.rotateObject} angle='-30'>
+                  <svg className="rotation-svg" id="left-icon" version="1.1" viewBox="0 0 486.805 486.805" onClick={this.rotateObject} angle='-30'>
+                    <path d = {RotationIcon.left} />
+                  </svg>
+                </button>
               </div>
               <div>
-                <button id="c-clockwise" onClick={this.rotateObject} angle='30'></button>
+                <button id="c-clockwise" onClick={this.rotateObject} angle='30'>
+                  <svg className="rotation-svg" version="1.1" viewBox="0 0 80 80 " onClick={this.rotateObject} angle='30'>
+                    <path d = {RotationIcon.right} />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
@@ -73,7 +95,7 @@ export default withTranslation()(class Rotation extends Component{
               max='360'
               step='1'
               placeholder='0'
-              value={this.props.object.type !== 'not active' ? this.props.object.angle : 0}
+              value={this.angleValue()}
               onChange={this.handleAngleChange}
             />
           </div>

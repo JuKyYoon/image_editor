@@ -78,6 +78,7 @@
 }
 .topnav{
   background-color: #171c24;
+  min-height: 55px;
   height: 7vh;
   display: flex;
   flex-direction: column;
@@ -324,7 +325,7 @@
       text-align: center;
       line-height: 30px;
       color: white;
-      background-color: #3498db;
+      background-color: #688eff;
       border-radius: 4.5px;
       opacity: 0.85;
       transition: all 0.15s linear;
@@ -351,7 +352,7 @@
       text-align: center;
       line-height: 30px;
       color: white;
-      background-color: #3498db;
+      background-color: #688eff;
       border-radius: 4.5px;
       opacity: 0.85;
       transition: all 0.15s linear;
@@ -412,5 +413,6 @@
 .inner {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 20vmin);
+  width: calc(100% - 200px);
+  // width: calc(100% - 20vmin);
 }

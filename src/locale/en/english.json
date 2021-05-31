@@ -213,7 +213,8 @@
         "More" : "more",
         "Zoom" : "zoom",
         "Home" : "Home",
-        "LeavePage" : "Are you sure you're leaveing?"
+        "LeavePage" : "Are you sure you're leaveing?",
+        "Download" : "Download"
     },
 
     "ImageFilter" : {
@@ -370,26 +371,32 @@
         "CropCanvas" : "Start Crop",
         "CropEndCanvas" : "End Crop",
         "CanvasColor" : "Canvas BackgroundColor",
+        "Color opacity" : "Color opacity",
         "CanvasEtc" : "Etc",
         "Beta" : "Beta",
         "CanvasExport" : "Export a Canvas",
         "CanvasImport" : "Import a Canvas",
         "GridSnap" : "Snap",
         "GridShow" : "Grid",
-        "ObjectSnap" : "Object Snap"
+        "ObjectSnap" : "Object Snap",
+        "Transparent background" : "Transparent Background",
+        "CropBackground" : "No Crop BackgroundImage"
     },
 
     "ui/draw" : {
         "Draw" : "Draw",
         "Brush type" : "Brush Type",
         "Width" : "Brush Width",
-        "Line Color" : "Brush Color"
+        "Line Color" : "Brush Color",
+        "Color opacity" : "색 투명도",
+        "Draw Mode" : "Select a Mode"
     },
 
     "ui/effect" : {
         "Effect" : "Effect",
         "Blur" : "Blur",
         "ShadowColor" : "Shadow Color",
+        "Color opacity" : "Color opacity",
         "OffsetY" : "Offset Y",
         "OffsetX" : "Offset X",
         "Stroke" : "Stroke",
@@ -442,7 +449,8 @@
         "Icon" : "Icon",
         "Pick icon" : "Pick icon",
         "Color" : "Icon Color",
-        "Pipette" : "Pipette"
+        "Pipette" : "Pipette",
+        "Color opacity" :"Color opacity"
     },
 
     "ui/image" : {
@@ -496,7 +504,8 @@
         "Drag" : "Drag",
         "Adjust degree": "Adjust degree",
         "Degree" : "Degree",
-        "Pipette" : "Pipette"
+        "Pipette" : "Pipette",
+        "Color opacity" :"Color opacity"
     },
 
     "ui/sidenav" : {
@@ -516,6 +525,7 @@
 
     "ui/text" : {
         "Text" : "Text",
+        "Add Text" : "Add Text",
         "New Text" : "New Text",
         "Font" : "Font",
         "Font size" : "Font size",
@@ -524,6 +534,7 @@
         "Text background" : "Text background",
         "Active" : "Active",
         "Text color" : "Text color",
+        "Text opacity" : "Color opacity",
         "Text bg color" : "Text Background color",
         "Pipette" : "Pipette",
         "Font family" : "Font Family"

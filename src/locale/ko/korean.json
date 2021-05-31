@@ -204,7 +204,8 @@
         "More" : "더 보기",
         "Zoom" : "확대",
         "Home" : "홈 화면",
-        "LeavePage" : "페이지를 떠나시겠습니까?"
+        "LeavePage" : "페이지를 떠나시겠습니까?",
+        "Download" : "다운로드"
     },
 
     "ImageFilter" : {
@@ -361,26 +362,32 @@
         "CropCanvas" : "캔버스 자르기 시작",
         "CropEndCanvas" : "자르기 완료",
         "CanvasColor" : "캔버스 배경색",
+        "Color opacity" : "색 투명도",
         "CanvasEtc" : "기타 기능",
         "Beta" : "베타 기능",
         "CanvasExport" : "캔버스 로컬파일 저장",
         "CanvasImport" : "캔버스 불러오기",
         "GridSnap" : "스냅",
         "GridShow" : "그리드",
-        "ObjectSnap" : "오브젝트 스냅"
+        "ObjectSnap" : "오브젝트 스냅",
+        "Transparent background" : "투명 배경화면",
+        "CropBackground" : "배경화면 자르지 않기"
     },
 
     "ui/draw" : {
         "Draw" : "그리기",
         "Brush type" : "붓 종류",
         "Width" : "붓 두께",
-        "Line Color" : "붓 색깔"
+        "Line Color" : "붓 색깔",
+        "Color opacity" : "색 투명도",
+        "Draw Mode" : "모드 선택"
     },
 
     "ui/effect" : {
         "Effect" : "효과",
         "Blur" : "블러",
         "ShadowColor" : "그림자 색상",
+        "Color opacity" : "색 투명도",
         "OffsetY" : "세로 위치",
         "OffsetX" : "가로 위치",
         "Stroke" : "외곽선",
@@ -433,7 +440,8 @@
         "Icon" : "아이콘",
         "Pick icon" : "아이콘 선택",
         "Color" : "아이콘 색",
-        "Pipette" : "스포이드"
+        "Pipette" : "스포이드",
+        "Color opacity" :"색 투명도"
     },
 
     "ui/image" : {
@@ -487,7 +495,8 @@
         "Drag" : "드래그",
         "Adjust degree": "각도 조절",
         "Degree" : "도",
-        "Pipette" : "스포이드"
+        "Pipette" : "스포이드",
+        "Color opacity" : "색 투명도"
     },
 
     "ui/sidenav" : {
@@ -507,6 +516,7 @@
 
     "ui/text" : {
         "Text" : "텍스트",
+        "Add Text" : "텍스트 추가",
         "New Text" : "새 텍스트",
         "Font" : "폰트",
         "Font size" : "글자 크기",
@@ -515,6 +525,7 @@
         "Text background" : "글자 배경색",
         "Active" : "켜기",
         "Text color" : "글자색",
+        "Text opacity" : "색 투명도",
         "Text bg color" : "글자 배경색",
         "Pipette" : "스포이드",
         "Font family" : "폰트 패밀리"

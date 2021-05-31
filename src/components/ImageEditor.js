@@ -5,6 +5,7 @@ import i18next from "../locale/i18n";
 import { debounce } from 'lodash';
 import Draggable from 'react-draggable';
 import { Prompt } from 'react-router-dom';
+import { linkIcon } from './const/consts';
 
 import '../css/ImageEditor.scss'
 import Save from './Save';
@@ -123,7 +124,7 @@ class ImageEditor extends Component {
 
     fabric.Object.prototype.originX = fabric.Object.prototype.originY = 'center';
     this._createAction();
-    this.filterRef = React.createRef()
+    this.scrollBot = React.createRef()
   }
 
   componentDidMount() {
@@ -152,8 +153,8 @@ class ImageEditor extends Component {
       if(this._canvasImageUrl){
         this.loadImage(
           this._canvasImageUrl,
-          {x : 0, y : 0}, 
-          {originX : "left", originY : "top", scaleX : this._backgroundImageRatio, scaleY : this._backgroundImageRatio}
+          {x : this._canvasSize.width / 2, y : this._canvasSize.height / 2}, 
+          {originX : "center", originY : "center", scaleX : this._backgroundImageRatio, scaleY : this._backgroundImageRatio}
         )
         .then((img) => {
           this._backgroundImage = img;
@@ -199,7 +200,7 @@ class ImageEditor extends Component {
           preserveObjectStacking: true,
           height: this._canvasSize.height,
           width: this._canvasSize.width,
-          backgroundColor: 'grey',
+          backgroundColor: '#EEEEEE',
           backgroundImage : this._backgroundImage,
           uniformScaling: false,
           imageSmoothingEnabled : false,
@@ -539,7 +540,10 @@ class ImageEditor extends Component {
 
     })
     this._canvas.on('object:scaling', (event) => {
-
+      if(event.target.type !== 'Cropzone') {
+        this.saveState(event.target.type + ' : scale change');
+      }
+      // this.forceUpdate();
     })
 
     this._canvas.on('object:moved', this._movedObjectSave);
@@ -649,6 +653,7 @@ class ImageEditor extends Component {
       this.currentState.id = this.stateStack.length > 0 ? this.stateStack[this.stateStack.length -1].id + 1 : 1;
       this.redoStack.length = 0;
       this.forceUpdate(); // for showUndo/Redo Stack
+      this.scrollBot.current.scrollTop = this.scrollBot.current.scrollHeight
     }
   }, 200);
 
@@ -910,8 +915,8 @@ class ImageEditor extends Component {
     this.action['Draw'].drawPolygonWithClick();
   }
 
-  openDrawing = () => {
-    this.action['Draw'].openDrawing();
+  openDrawing = (linewidth) => {
+    this.action['Draw'].openDrawing(linewidth);
   }
 
   closeDrawing = () => {
@@ -960,6 +965,10 @@ class ImageEditor extends Component {
 
   saveImage = (title) => {
     this.action['Image'].saveImage(title);
+  }
+
+  downloadImage = () => {
+    this.action['Image'].saveImage("image");
   }
 
   addImage = (url) => {
@@ -1237,6 +1246,14 @@ class ImageEditor extends Component {
     })
   }
 
+  clearBackgroundColor = () => {
+    if(this._canvas){
+      console.log('a')
+      this._canvas.backgroundColor = null;
+      this._canvas.renderAll();
+    }
+  }
+
   changeToKorean = () => {
     i18next.changeLanguage('ko')
   }
@@ -1330,20 +1347,27 @@ class ImageEditor extends Component {
   showUndoStack = () => {
     // const { t } = useTranslation();
     const listitem = this.stateStack.map((state) =>
-      <p style = {{color : 'black'}} key= {state.id} className="undo_stack" number = {state.id} onClick = {this.onclickUndoStack} >{state.id} : {i18next.t(state.action)}</p>
+    <div className="stack-box" key= {state.id} >
+        <div style = {{color : 'black'}} className="undo-stack" number = {state.id} onClick = {this.onclickUndoStack} >
+            {state.id + 1} : {i18next.t(state.action)}
+        </div>
+        <div className="link-image">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50">
+                <path d={linkIcon.link} />
+            </svg>
+        </div>
+    </div>
     );
     return(
-      <div style={{color : 'black'}}>
-        <ol>
+      <div>
           {listitem}
-        </ol>
       </div>
     )
   }
 
   showRedoStack = () => {
     const listitem = this.redoStack.map((state) =>
-      <p style = {{color : '#820000'}} key = {state.id} className="redo_stack" number = {state.id} onClick = {this.onclickRedoStack}>{state.id} : {i18next.t(state.action)}</p>
+      <p style = {{color : '#820000'}} key = {state.id} className="redo-stack" number = {state.id} onClick = {this.onclickRedoStack}>{state.id} : {i18next.t(state.action)}</p>
     );
     return(
       <div>
@@ -1355,7 +1379,7 @@ class ImageEditor extends Component {
   showCurrentState = () => {
     if(this._canvas){
       return(
-        <div>
+        <div className="current-state">
           Current state : {i18next.t(this.currentState.action)}
         </div>
       )
@@ -1413,7 +1437,7 @@ class ImageEditor extends Component {
   }
 
   returnToHome = () => {
-    if(window.confirm(i18next.t('ImageEditor.LeavePage'))) window.location.replace('/');
+    if(window.confirm(i18next.t('ImageEditor.LeavePage'))) window.location.replace('/main');
   }
 
   canvasZoom = (event) => {
@@ -1451,7 +1475,6 @@ class ImageEditor extends Component {
     // }
 
 
-
     //캔버스 기능 씀. 문제는.. 스크롤바가 없다는 것.
     if(this._canvas.width * zoomScale < maxWidth && this._canvas.height * zoomScale < maxHeight){
       // document.getElementById('canvas').style.setProperty("transform", "scale("+zoomScale+","+zoomScale+")");
@@ -1468,8 +1491,8 @@ class ImageEditor extends Component {
 
   canvasZoomOut = (event) => {
     const zoomScale = this.state.scaleZoom - 0.05;
-    const maxHeight = document.getElementsByClassName('editor-main')[0].clientHeight
-    const maxWidth = document.getElementsByClassName('editor-main')[0].clientWidth
+    // const maxHeight = document.getElementsByClassName('editor-main')[0].clientHeight
+    // const maxWidth = document.getElementsByClassName('editor-main')[0].clientWidth
     // if(zoomScale > 0.1){
     //   document.getElementsByClassName('canvas-container')[0].style.setProperty("transform", "scale("+zoomScale+","+zoomScale+")");
     //   this.setState({ scaleZoom: this.state.scaleZoom - 0.05 })
@@ -1516,13 +1539,15 @@ class ImageEditor extends Component {
       document.getElementsByClassName('canvas-container')[0].style.setProperty("transform", "scale("+zoomScale+","+zoomScale+")");
       this.setState({ scaleZoom: zoomScale })
     }
+
+    document.getElementById("canvas").style["position"] = "static"
   }
 
 
   checkCanvasSize = () => {
-    const maxHeight = document.getElementsByClassName('real')[0].clientHeight
-    const maxWidth = document.getElementsByClassName('real')[0].clientWidth
-    // this.resizeScale();
+    // const maxHeight = document.getElementsByClassName('real')[0].clientHeight
+    // const maxWidth = document.getElementsByClassName('real')[0].clientWidth
+    this.resizeScale();
     // console.log(maxHeight, maxWidth)
   }
 
@@ -1555,9 +1580,20 @@ class ImageEditor extends Component {
       0: <HistoryUI showUndoStack = {this.showUndoStack} showCurrentState={this.showCurrentState}/>,
       1: <div className="layers-detail">{this.buttonLayer()}</div>,
       2: <div className="canvas-info">
-          <div>{i18next.t('ImageEditor.Zoom')} : {this.state.zoom}</div>
-          <div>{this._canvas ? this._canvas.width : 0} X {this._canvas ? this._canvas.height : 0}</div>
-          <div>{((this.state.scaleZoom + this.state.zoom - 1) * 100).toFixed(1)}%</div>
+          {/* <div className="canvas-zoom-info">{i18next.t('ImageEditor.Zoom')} : {this.state.zoom}</div> */}
+          <div className="canvas-size-info">
+            <p className="canvas-info-title">Size</p>
+            <p>{this._canvas ? this._canvas.width : 0} X {this._canvas ? this._canvas.height : 0}</p>
+          </div>
+          <hr/>
+          <div className="canvas-zoom-info">
+            <p className="canvas-info-title">Zoom {((this.state.scaleZoom + this.state.zoom - 1) * 100).toFixed(1)}%</p>
+          </div>
+          <hr/>
+          <div className="canvas-color-info">
+            <p className="canvas-info-title">Background Color</p>
+            <p>{this._canvas ? this._canvas.backgroundColor : "Null"}</p>
+          </div>
         </div>,
     }
     const tab = {
@@ -1604,7 +1640,7 @@ class ImageEditor extends Component {
           scaleXChange = {this.scaleXChange}
           scaleYChange = {this.scaleYChange}
           />,
-      5: <RotationUI object={this.state.activeObject} setObjectAngle = {this.setObjectAngle} rotateObjectAngle = {this.rotateObjectAngle}/>,
+      5: <RotationUI object={this.state.activeObject} getBackgroundImage = {this.getBackgroundImage} setObjectAngle = {this.setObjectAngle} rotateObjectAngle = {this.rotateObjectAngle}/>,
       6: <ShapeUI 
           object={this.state.activeObject} 
           addShape={this.addShape} 
@@ -1654,6 +1690,7 @@ class ImageEditor extends Component {
           gridOn = {this.gridOn}
           snapOn = {this.snapOn}
           objectSnapOn = {this.objectSnapOn}
+          clearBackgroundColor = {this.clearBackgroundColor}
         />,
       10: <EffectUI 
           object={this.state.activeObject} 
@@ -1674,10 +1711,10 @@ class ImageEditor extends Component {
         >
         </SideNav>
 
-        <div className={this.state.tab === 99 ? "closed-editor" : "editor"} id='editor'>
+        <div className={this.state.tab === 99 ? "closed-editor" : "opened-editor"} id='editor'>
           <Draggable
             boutnds="editor">
-            <div className="popup">
+            <div className="popup" ref={this.scrollBot}>
               <div className="popup-tab">
                 <div className={historyBorder} onClick={()=>this.clickHandler(0)}>{i18next.t('ImageEditor.History')}</div>
                 <div className={layerBorder} onClick={()=>this.clickHandler(1)}>{i18next.t('ImageEditor.Layer')}</div>
@@ -1688,17 +1725,18 @@ class ImageEditor extends Component {
               </div>
             </div>
           </Draggable>
-          <div className="editor-nav">
+          <div  className={this.state.tab === 99 ? "closed-editor-nav" : "editor-nav"}>
             <div className="do">
                 <button onClick = {this.undo}>{i18next.t('ImageEditor.Undo')}</button>
                 <button onClick = {this.redo}>{i18next.t('ImageEditor.Redo')}</button>
-                <button onClick = {this.buttonCanvasZoom} option = "in">+</button>
-                <button onClick = {this.buttonCanvasZoom} option = "out">-</button>
+                <button className="topnav-zoom" onClick = {this.buttonCanvasZoom} option = "in">+</button>
+                <button className="topnav-zoom" onClick = {this.buttonCanvasZoom} option = "out">-</button>
 
             </div>
             <div className="save">
             </div>
             <div className="save-more">
+                <button id="save" onClick={this.downloadImage} >{i18next.t('ImageEditor.Download')}</button>
                 <button id="save" onClick={this.openSaveModal} >{i18next.t('ImageEditor.Save')}</button>
                 <button id="more" onClick = { this.returnToHome }>{i18next.t('ImageEditor.Home')}</button>
                 {/* <input type="checkbox" onClick={this.getMousePointInfo} /> */}
