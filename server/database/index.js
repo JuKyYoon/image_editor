@@ -1,7 +1,7 @@
 const mysql = require("mysql");
 require('dotenv').config();
 const config = {
-  "host"     : "%",
+  "host"     : process.env.SESSION_DB_HOST,
   "user"     : process.env.SESSION_DB_USER,
   "password" : process.env.SESSION_DB_PW,
   "database" : process.env.SESSION_DB_NAME,
