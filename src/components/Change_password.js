@@ -119,12 +119,12 @@ class Change_password extends Component {
       .then((data) => {
         if(data.msg === 'success') {
           alert(i18next.t('Change_Password.PWsuccess'));
-          window.location.replace('/');
+          window.location.replace('/main');
         }
         else {
           if(data.msg === "not login") {
             alert(i18next.t("login_expired"));
-            window.location.replace('/');
+            window.location.replace('/main');
             return;
           }
           alert(i18next.t('Change_Password.PWfail'));
@@ -143,7 +143,7 @@ class Change_password extends Component {
         <div className="limiter">
           <div className="container-login100">
             <div className="wrap-login100">
-              <form className="login100-form validate-form">
+              <form className="login100-form validate-form" onSubmit={this.change_passwordClickHandler}>
                 <span className="login100-form-title">
                   {i18next.t('Change_Password.Change Password')}
               </span>
@@ -177,7 +177,7 @@ class Change_password extends Component {
                   </span>
                 </div>
                 <div className="container-login100-form-btn">
-                  <button className="login100-form-btn" id="confirm" disabled={true} onClick={this.change_passwordClickHandler}>
+                  <button className="login100-form-btn" id="confirm" disabled={true} type="submit">
                     {i18next.t('Change_Password.Confirm')}
                 </button>
                 </div>
