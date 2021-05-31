@@ -1,3 +1,4 @@
+require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const {Database, pool} = require('../../../database/index');
 const secretObj = require('../../../config/jwt');
