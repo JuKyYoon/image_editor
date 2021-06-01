@@ -1,5 +1,6 @@
 {
     "hello": "hello",
+    "initilize" : "initilize",
     "paste object" : "Paste Object",
     "image crop" : "Image Crop",
     "canvas crop" : "Canvas Crop",
@@ -401,14 +402,15 @@
 
     "ui/effect" : {
         "Effect" : "Effect",
-        "Blur" : "Blur",
+        "Blur" : "Shadow",
         "ShadowColor" : "Shadow Color",
         "Color opacity" : "Color opacity",
         "OffsetY" : "Offset Y",
         "OffsetX" : "Offset X",
         "Stroke" : "Stroke",
         "StrokeColor" : "Stroke Color",
-        "Pipette" : "Pipette"
+        "Pipette" : "Pipette",
+        "Blur strength" : "Shadow Blur"
     },
 
     "ui/filter" : {
@@ -510,7 +512,7 @@
         "Free making" : "Free making",
         "Click" : "Click",
         "Drag" : "Drag",
-        "Adjust degree": "Adjust degree",
+        "Adjust degree": "Adjust Circle degree",
         "Degree" : "Degree",
         "Pipette" : "Pipette",
         "Color opacity" :"Color opacity"

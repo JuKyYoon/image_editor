@@ -88,11 +88,17 @@
     color : white;
     font-size: 2.5vh;
     text-align: center;
+  }
 
+  .site-title-a:hover {
+    color : grey;
   }
 
   .site-title-p {
     font-size: 1.5vh;
+  }
+  .site-title-p:hover {
+    color : grey;
   }
 
   .right {
@@ -202,7 +208,7 @@
   bottom: 0;
   display: block;
   padding-left: 10px;
-  padding-bottom: 10px;
+  padding-bottom: 50px;
   font-size: 30px;
 }
 
