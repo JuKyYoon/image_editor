@@ -31,11 +31,13 @@ class Main extends Component {
 
   loginSuccess = (id) => {
     this.setState({id : id, login_state: true});
+    console.log('asdf')
   }
 
   loginFail = () => {
     let tab = this.state.tab === 4 ? 0 : this.state.tab
     this.setState({login_state: false, tab : tab});
+    console.log('asdf2')
   }
 
   getCheck = () => {

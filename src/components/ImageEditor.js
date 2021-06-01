@@ -491,6 +491,11 @@ class ImageEditor extends Component {
     
 		this._canvas.on('selection:created', (event) => {
       this.setState({activeObject : this.getActiveObject() });
+      event.target.set({
+        cornerStrokeColor : "grey",
+        borderColor : "grey"
+      })
+      this._canvas.renderAll();
 		});
 
 		this._canvas.on('selection:updated', (event) => {
