@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.c5e84878.chunk.css",
-    "main.js": "/static/js/main.b7921cde.chunk.js",
-    "main.js.map": "/static/js/main.b7921cde.chunk.js.map",
+    "main.css": "/static/css/main.b9674a9b.chunk.css",
+    "main.js": "/static/js/main.8960d34d.chunk.js",
+    "main.js.map": "/static/js/main.8960d34d.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.10719084.js",
     "runtime-main.js.map": "/static/js/runtime-main.10719084.js.map",
     "static/js/2.e9cada5b.chunk.js": "/static/js/2.e9cada5b.chunk.js",
     "static/js/2.e9cada5b.chunk.js.map": "/static/js/2.e9cada5b.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.c5e84878.chunk.css.map": "/static/css/main.c5e84878.chunk.css.map",
+    "static/css/main.b9674a9b.chunk.css.map": "/static/css/main.b9674a9b.chunk.css.map",
     "static/js/2.e9cada5b.chunk.js.LICENSE.txt": "/static/js/2.e9cada5b.chunk.js.LICENSE.txt",
     "static/media/main.scss": "/static/media/Poppins-Regular.1c701c9a.ttf",
     "static/media/Filter.scss": "/static/media/vintage.2adac50c.png",
@@ -18,7 +18,7 @@
   "entrypoints": [
     "static/js/runtime-main.10719084.js",
     "static/js/2.e9cada5b.chunk.js",
-    "static/css/main.c5e84878.chunk.css",
-    "static/js/main.b7921cde.chunk.js"
+    "static/css/main.b9674a9b.chunk.css",
+    "static/js/main.8960d34d.chunk.js"
   ]
 }
