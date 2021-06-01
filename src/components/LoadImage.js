@@ -120,7 +120,7 @@ class LoadImage extends Component {
       this.setState({loading : false});
       console.log('fail');
     }
-
+    console.log(corsLink)
     imgObj.src = corsLink + this.state.url;
   }
 
