@@ -36,19 +36,30 @@ app.use(express.static(path.join(__dirname, '../build')))
 // set the secret key variable for jwt
 app.set('jwt-secret', config.secret);
 
+const options = { etag: false };
+app.use(express.static("public", options));
+
 // router
+// app.use((req, res, next) => {
+//     res.status(404).send('NOT FOUND');
+// })
+// app.use((err, req, res, next) => {
+//     console.log(err.stack)
+//     res.status(500).send('Server ERR');
+// })
+
 app.use('/', require('./routes/index'));
 
 
-// var host = process.env.HOST || '127.0.0.1';
-// var cors_proxy = require('cors-anywhere');
-// cors_proxy.createServer({
-//     originWhitelist: [], // Allow all origins
-//     requireHeader: ['origin', 'x-requested-with'],
-//     removeHeaders: ['cookie', 'cookie2']
-// }).listen(port, host, function() {
-//     console.log('Running CORS Anywhere on ' + host + ':' + port);
-// });
+var host = process.env.HOST || '127.0.0.1';
+var cors_proxy = require('cors-anywhere');
+cors_proxy.createServer({
+    originWhitelist: [], // Allow all origins
+    requireHeader: ['origin', 'x-requested-with'],
+    removeHeaders: ['cookie', 'cookie2']
+}).listen(port, host, function() {
+    console.log('Running CORS Anywhere on ' + host + ':' + port);
+});
 
 // open server
 app.listen(port, () => {
